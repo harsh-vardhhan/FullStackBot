@@ -63,10 +63,10 @@ function App() {
 }
 
 
-const ListItem = ({item, i, expandedJob, expandJob}) => {
+const ListItem = ({item, i}) => {
     return (
       <div>
-        <List.Item style={{backgroundColor:"#f4f9f4"}} onClick={() => expandJob(i)}>
+        <List.Item style={{backgroundColor:"#f4f9f4"}}>
           <List.Item.Meta
             avatar={
                 <Avatar style={{marginLeft: 7}} shape="square" size="large" src={item.companyImage}/>}
@@ -109,7 +109,7 @@ const Tags = ({item}) => {
             )}
           </TagContainer>
           <div style={{paddingRight: "2%"}}>
-            <Button size="small" type="primary" href={item.jobLink} style={{borderWidth: 2, borderColor: "#00b7c2"}} ghost>
+            <Button size="small" type="primary" onClick={ () => window.open(item.jobLink)} style={{borderWidth: 2, borderColor: "#00b7c2"}} ghost>
               <font color="#00b7c2"> <strong>{'Apply'}</strong></font>
             </Button>
           </div>
