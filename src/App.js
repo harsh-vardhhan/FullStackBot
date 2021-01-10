@@ -145,7 +145,7 @@ const Logo = (props) => {
   if (window.innerWidth > 415) {
     return (
       <HeaderContainer style={{marginTop: '2%'}}>
-          <img alt="full-stack-developer-jobs" style={{height: '75px', width: '75px'}} src={require('./robot.jpg')} />
+          <img alt="full-stack-developer-jobs" style={{height: '95px', width: '95px'}} src={require('./robot.jpg')} />
           <h2 style={{color: '#00b7c2', fontSize: 55, fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
       </HeaderContainer>
     )
