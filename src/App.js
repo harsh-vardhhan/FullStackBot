@@ -146,14 +146,14 @@ const Logo = (props) => {
     return (
       <HeaderContainer style={{marginTop: '2%'}}>
           <img alt="full-stack-developer-jobs" style={{height: '75px', width: '75px'}} src={require('./robot.jpg')} />
-          <h2 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
+          <h2 style={{color: '#00b7c2', fontSize: 55, fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
       </HeaderContainer>
     )
   } else {
     return (
       <HeaderContainer style={{marginTop: '2%'}}>
-          <img alt="full-stack-developer-jobs" style={{height: '35px', width: '35px'}} src={require('./robot.jpg')} />
-          <h3 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h3>
+          <img alt="full-stack-developer-jobs" style={{height: '55px', width: '55px'}} src={require('./robot.jpg')} />
+          <h3 style={{color: '#00b7c2',fontSize: 25, fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h3>
       </HeaderContainer>
     )
   }
