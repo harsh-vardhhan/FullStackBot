@@ -1,5 +1,31 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
+h1 {
+  font-family: "Rubik", sans-serif;
+  font-display: swap;
+}
+
+h2 {
+  font-family: "Rubik", sans-serif;
+  font-display: swap;
+}
+
+h3 {
+  font-family: "Rubik", sans-serif;
+  font-display: swap;
+}
+
+html {
+  font-family: "Rubik", sans-serif;
+  font-display: swap;
+}
+
 body {
   margin: 0;
-  font-family: 'rubik';
+  font-family: 'Rubik';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: 'Rubik';
 }
