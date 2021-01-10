@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Layout, List, Avatar, Button, Typography} from 'antd';
+import {List, Avatar, Button} from 'antd';
 import {jobData} from './jobs'
 import ReactGA from 'react-ga';
 import './index.css';
@@ -9,10 +9,6 @@ import 'typeface-rubik';
 
 ReactGA.initialize('UA-31455093-8');
 ReactGA.pageview(window.location.pathname + window.location.search);
-
-
-const {Header} = Layout;
-const {Title} = Typography;
 
 const Container = styled.section`
   display: flex;
@@ -46,10 +42,10 @@ function App() {
     <Container>
       <div style={{height: 10,background: '#00b7c2'}}/>
       <div>
-          <Header style={{background: '#ffffff'}}>
+          <Container style={{background: '#ffffff'}}>
             <LogoBody/>
-          </Header>
-          <TableContainer style={{paddingTop:"8%", paddingLeft:"10%", width: '90%'}}>
+          </Container>
+          <TableContainer style={{paddingTop: '1%', paddingLeft:"10%", width: '90%'}}>
               {jobData.map((item, i) => {
                   return (
                     <div key={i}>
@@ -85,7 +81,7 @@ const ListItem = ({item, i}) => {
                 </div>
                 <div  style={{paddingTop: 5}}>
                   <div style={{border: 'solid',borderRadius: 5, borderWidth: 2, borderColor: "#f05454", textAlign: 'center', wordWrap: 'break-word',display:'inline-block'}}>
-                    <font color="#f05454"><strong>&nbsp;{item.jobLocation}&nbsp;</strong></font>
+                    <font color="#f05454"><strong>&nbsp;&nbsp;{item.jobLocation}&nbsp;&nbsp;</strong></font>
                   </div>
                 </div>
               </div>
@@ -137,45 +133,28 @@ const Tags = ({item}) => {
 }
 
 const LogoBody = () => {
-  if (window.innerWidth > 415) {
     return (
-      <Title style={{paddingTop: '0%'}}>
         <HeaderContainer>
           <Logo/>
         </HeaderContainer>
-      </Title>
-    ) 
-  }
-  else {
-    return (
-      <Title style={{paddingTop: '3%'}}>
-        <HeaderContainer>
-          <Logo/>
-        </HeaderContainer>
-      </Title>
-    ) 
-  }
+    )
 }
 
 
 const Logo = (props) => {
   if (window.innerWidth > 415) {
     return (
-      <div style={{marginTop: '2%'}}>
-        <HeaderContainer>
-            <img alt="full-stack-developer-jobs" style={{height: '75px', width: '75px'}} src={require('./robot.jpg')} />
-            <h2 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
-        </HeaderContainer>
-      </div>
+      <HeaderContainer style={{marginTop: '2%'}}>
+          <img alt="full-stack-developer-jobs" style={{height: '75px', width: '75px'}} src={require('./robot.jpg')} />
+          <h2 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
+      </HeaderContainer>
     )
   } else {
     return (
-      <div style={{marginTop: '2%'}}>
-        <HeaderContainer>
-            <img alt="full-stack-developer-jobs" style={{height: '35px', width: '35px'}} src={require('./robot.jpg')} />
-            <h3 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h3>
-        </HeaderContainer>
-      </div>
+      <HeaderContainer style={{marginTop: '2%'}}>
+          <img alt="full-stack-developer-jobs" style={{height: '35px', width: '35px'}} src={require('./robot.jpg')} />
+          <h3 style={{color: '#00b7c2', fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h3>
+      </HeaderContainer>
     )
   }
 }
