@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
 import {List, Avatar, Button} from 'antd';
-import {jobData} from './jobs'
+import {getJob} from './Api'
 import ReactGA from 'react-ga';
 import {analyticsId} from './analytics'
 import './index.css';
@@ -39,6 +39,16 @@ const TagContainer = styled.section`
 
 function App() {
 
+  const [jobs, setJobs] = useState([])
+
+  useEffect(() => {
+    const fetchJobs = async() => {
+      const jobsData = await getJob()
+      setJobs(jobsData.jobs)
+    }
+    fetchJobs()
+  },[])
+
   return (
     <Container>
       <div style={{height: 10,background: '#00b7c2'}}/>
@@ -47,7 +57,7 @@ function App() {
             <LogoBody/>
           </Container>
           <TableContainer style={{paddingTop: '1%', paddingLeft:"10%", width: '90%'}}>
-              {jobData.map((item, i) => {
+              {jobs.map((item, i) => {
                   return (
                     <div key={i}>
                       <ListItem item={item}/>
