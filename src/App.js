@@ -4,10 +4,11 @@ import 'antd/dist/antd.css';
 import {List, Avatar, Button} from 'antd';
 import {jobData} from './jobs'
 import ReactGA from 'react-ga';
+import {analyticsId} from './analytics'
 import './index.css';
 import 'typeface-rubik';
 
-ReactGA.initialize('UA-31455093-8');
+ReactGA.initialize(analyticsId);
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 const Container = styled.section`
