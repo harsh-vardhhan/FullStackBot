@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const LOCALHOST = 'http://127.0.0.1:8000/';
+const LOCALHOST = 'https://fullstackbot-backend.onrender.com/';
 const defaultAxiosOptions = {
   baseURL: LOCALHOST
 };
