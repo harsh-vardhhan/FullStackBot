@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
-import {List, Avatar, Button, Tag} from 'antd';
+import {List, Avatar, Button} from 'antd';
 import {getJob, getTag, filterTag} from './Api';
 import ReactGA from 'react-ga';
 import './index.css';
