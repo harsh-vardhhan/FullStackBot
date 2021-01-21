@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
-import {List, Avatar, Button} from 'antd';
+import {List, Avatar, Button, Tag} from 'antd';
 import {getJob, getTag, filterTag} from './Api';
 import ReactGA from 'react-ga';
 import './index.css';
@@ -91,12 +91,12 @@ function App() {
                         return (
                             <Button
                                 key={i}
-                                onClick={() => filterTagAction(item)}
+                                onClick={() => filterTagAction(item.tag)}
                                 style={{marginLeft: 4, marginTop: 4, borderWidth: 2, borderColor: '#4a47a3'}}
                                 size='small'
                                 ghost={true}
                             >
-                                <font color='#4a47a3'> <strong>{item}</strong></font>
+                                <font color='#4a47a3'> <strong>{item.tag}{' x '}{item.count}</strong></font>
                             </Button>
                         );
                     })}
