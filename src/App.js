@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
 import {List, Avatar, Button} from 'antd';
+import Collapsible from 'react-collapsible';
 import {getJob, getTag, filterTag} from './Api';
 import ReactGA from 'react-ga';
 import './index.css';
@@ -39,6 +40,7 @@ const TagContainer = styled.section`
 function App() {
     const [jobs, setJobs] = useState([]);
     const [tags, setTags] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(null);
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -58,6 +60,14 @@ function App() {
     const AllTagAction = async () => {
         const jobsData = await getJob();
         setJobs(jobsData.jobs);
+    };
+
+    const toggleClass = (index) => {
+        if (activeIndex === index) {
+            setActiveIndex(null);
+        } else {
+            setActiveIndex(index);
+        }
     };
 
     return (
@@ -105,7 +115,12 @@ function App() {
                     {jobs.map((item, i) => {
                         return (
                             <div key={i}>
-                                <ListItem item={item}/>
+                                <ListItem
+                                    item={item}
+                                    index={i}
+                                    activeIndex={activeIndex}
+                                    toggleClass={toggleClass}
+                                />
                             </div>
                         );
                     })}
@@ -115,10 +130,16 @@ function App() {
     );
 }
 
-const ListItem = ({item}) => {
+const ListItem = ({item, index, activeIndex, toggleClass}) => {
     return (
         <div>
-            <List.Item style={{backgroundColor: '#f4f9f4'}}>
+            <List.Item
+                onClick={() => toggleClass(index)}
+                style={{
+                    backgroundColor: '#f4f9f4',
+                    cursor: 'pointer'
+                }}
+            >
                 <List.Item.Meta
                     avatar={
                         <Avatar
@@ -161,6 +182,12 @@ const ListItem = ({item}) => {
                 />
                 <Tags item={item}/>
             </List.Item>
+            <Collapsible open={activeIndex === index}>
+                <br/>
+                <Container style={{width: '70%', marginLeft: '15%', padding: '2%'}}>
+                    <div dangerouslySetInnerHTML={{__html: item.jobContent}}/>
+                </Container>
+            </Collapsible>
             <br/>
         </div>
     );
