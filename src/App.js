@@ -184,13 +184,27 @@ const ListItem = ({item, index, activeIndex, toggleClass}) => {
             </List.Item>
             <Collapsible open={activeIndex === index}>
                 <br/>
-                <Container style={{width: '70%', marginLeft: '15%', padding: '2%'}}>
-                    <div dangerouslySetInnerHTML={{__html: item.jobContent}}/>
-                </Container>
+                <Content item={item}/>
             </Collapsible>
             <br/>
         </div>
     );
+};
+
+const Content = ({item}) => {
+    if (window.innerWidth > 415) {
+        return (
+            <Container style={{width: '70%', marginLeft: '15%', padding: '2%'}}>
+                <div dangerouslySetInnerHTML={{__html: item.jobContent}}/>
+            </Container>
+        );
+    } else {
+        return (
+            <Container style={{width: '90%'}}>
+                <div dangerouslySetInnerHTML={{__html: item.jobContent}}/>
+            </Container>
+        );
+    }
 };
 
 const Tags = ({item}) => {
