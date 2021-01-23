@@ -92,6 +92,7 @@ function App() {
 
     const handleLogin = async () => {
         const login = await adminLogin({email, password});
+        setToken(login.token);
         localStorage.setItem('token', login.token);
         setIsLoginModalVisible(false);
     };
