@@ -90,9 +90,13 @@ function App() {
         setIsLoginModalVisible(true);
     };
 
-    const handleCancel = async () => {
+    const handleLogin = async () => {
         const login = await adminLogin({email, password});
         localStorage.setItem('token', login.token);
+        setIsLoginModalVisible(false);
+    };
+
+    const handleCancel = () => {
         setIsLoginModalVisible(false);
     };
 
@@ -140,7 +144,7 @@ function App() {
                                                 width: '100%'
                                             }}
                                             size='large'
-                                            onClick={() => handleCancel()}
+                                            onClick={() => handleLogin()}
                                         >
                                             <div style={head}>Login</div>
                                         </Button>
