@@ -29,3 +29,33 @@ body {
 code {
   font-family: 'Rubik';
 }
+
+
+.App-login {
+  text-align: center;
+  min-width: 50vh;
+  min-height: 35vh;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         5px 2px 12px 3px #c9d1d3;
+}
+
+.App-admin {
+  text-align: center;
+  min-width: 50vh;
+  min-height: 35vh;
+  background-color: #FFFFFF;
+}
+
+.App-description {
+  text-align: center;
+  min-width: 80vh;
+  min-height: 50vh;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         5px 2px 12px 3px #c9d1d3;
+}

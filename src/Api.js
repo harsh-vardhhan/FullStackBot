@@ -23,3 +23,13 @@ export const filterTag = async (body) => {
     const response = await fetch.post('filtertag/', body);
     return response.data;
 };
+
+export const adminLogin = async (body) => {
+    const response = await fetch.post('adminlogin/', body);
+    return response.data;
+};
+
+export const editJob = async (body) => {
+    const response = await fetch.put('editjob/', body);
+    return response.data;
+};

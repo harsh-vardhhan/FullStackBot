@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
-import {List, Avatar, Button} from 'antd';
+import {List, Avatar, Button, Modal, Input, Row, Col} from 'antd';
 import Collapsible from 'react-collapsible';
-import {getJob, getTag, filterTag} from './Api';
+import {getJob, getTag, filterTag, adminLogin} from './Api';
 import ReactGA from 'react-ga';
 import './index.css';
 import 'typeface-rubik';
+import {Link} from 'react-router-dom';
+import {
+    MailOutlined,
+    KeyOutlined
+} from '@ant-design/icons';
 
 ReactGA.initialize('UA-31455093-8');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -37,10 +42,20 @@ const TagContainer = styled.section`
   align-items: center;
 `;
 
+const head = {
+    fontWeight: '600',
+    fontSize: '20px',
+    color: '#00b7c2'
+};
+
 function App() {
     const [jobs, setJobs] = useState([]);
     const [tags, setTags] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
+    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -48,6 +63,7 @@ function App() {
             const tagsData = await getTag();
             setTags(tagsData.tags);
             setJobs(jobsData.jobs);
+            setToken(localStorage.getItem('token'));
         };
         fetchJobs();
     }, []);
@@ -70,8 +86,72 @@ function App() {
         }
     };
 
+    const setIsModalVisible = () => {
+        setIsLoginModalVisible(true);
+    };
+
+    const handleCancel = async () => {
+        const login = await adminLogin({email, password});
+        localStorage.setItem('token', login.token);
+        setIsLoginModalVisible(false);
+    };
+
     return (
         <Container>
+            <Modal
+                title='Login'
+                visible={isLoginModalVisible}
+                onOk={handleCancel}
+                onCancel={handleCancel}
+                footer={null}
+            >
+
+                <Row>
+                    <Col span={9}>
+                        <Container style={{marginLeft: '30%'}}>
+                            <div
+                                className='App-admin'
+                                style={{borderRadius: 0}}
+                            >
+                                <div style={{width: '90%', marginLeft: '16px'}}>
+                                    <h4 style={head}>Admin</h4>
+                                    <div style={{paddingTop: '4%'}}>
+                                        <Input
+                                            addonBefore={<MailOutlined/>}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder='Email'
+                                        />
+                                    </div>
+                                    <div style={{paddingTop: '4%'}}>
+                                        <Input
+                                            addonBefore={<KeyOutlined/>}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            placeholder='Password'
+                                            type={'password'}
+                                        />
+                                    </div>
+                                    <div style={{paddingTop: '15%', paddingBottom: '5%'}}>
+                                        <Button
+                                            style={{
+                                                borderWidth: 4,
+                                                borderColor: '#00b7c2',
+                                                width: '100%'
+                                            }}
+                                            size='large'
+                                            onClick={() => handleCancel()}
+                                        >
+                                            <div style={head}>Login</div>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Container>
+                    </Col>
+                </Row>
+
+            </Modal>
             <div style={{height: 10, background: '#00b7c2'}}/>
             <div>
                 <Container style={{background: '#ffffff'}}>
@@ -120,17 +200,32 @@ function App() {
                                     index={i}
                                     activeIndex={activeIndex}
                                     toggleClass={toggleClass}
+                                    token={token}
                                 />
                             </div>
                         );
                     })}
                 </TableContainer>
             </div>
+            <Container style={{height: 30}}>
+                <Button
+                    style={{
+                        borderWidth: 2,
+                        borderColor: '#4a47a3',
+                        width: 70,
+                        marginLeft: 10
+                    }}
+                    size='small'
+                    onClick={() => setIsModalVisible()}
+                >
+                    <font color='#4a47a3'> <strong>{'Admin'}</strong></font>
+                </Button>
+            </Container>
         </Container>
     );
 }
 
-const ListItem = ({item, index, activeIndex, toggleClass}) => {
+const ListItem = ({item, index, activeIndex, toggleClass, token}) => {
     return (
         <div>
             <List.Item
@@ -180,7 +275,10 @@ const ListItem = ({item, index, activeIndex, toggleClass}) => {
                         </div>
                     }
                 />
-                <Tags item={item}/>
+                <Tags
+                    item={item}
+                    token={token}
+                />
             </List.Item>
             <Collapsible open={activeIndex === index}>
                 <br/>
@@ -207,7 +305,7 @@ const Content = ({item}) => {
     }
 };
 
-const Tags = ({item}) => {
+const Tags = ({item, token}) => {
     if (window.innerWidth > 415) {
         return (
             <>
@@ -216,7 +314,12 @@ const Tags = ({item}) => {
                         (
                             <Button
                                 key={i}
-                                style={{marginLeft: 4, marginTop: 4, borderWidth: 2, borderColor: '#4a47a3'}}
+                                style={{
+                                    marginLeft: 4,
+                                    marginTop: 4,
+                                    borderWidth: 2,
+                                    borderColor: '#4a47a3'
+                                }}
                                 size='small'
                                 ghost={true}
                             >
@@ -226,15 +329,10 @@ const Tags = ({item}) => {
                     )}
                 </TagContainer>
                 <div style={{paddingRight: '2%'}}>
-                    <Button
-                        size='small'
-                        type='primary'
-                        onClick={() => window.open(item.jobLink)}
-                        style={{borderWidth: 2, borderColor: '#00b7c2'}}
-                        ghost={true}
-                    >
-                        <font color='#00b7c2'> <strong>{'Apply'}</strong></font>
-                    </Button>
+                    <ApplyEditButton
+                        token={token}
+                        item={item}
+                    />
                 </div>
             </>
         );
@@ -246,7 +344,12 @@ const Tags = ({item}) => {
                         (
                             <Button
                                 key={i}
-                                style={{marginTop: 4, marginLeft: 4, borderWidth: 2, borderColor: '#4a47a3'}}
+                                style={{
+                                    marginTop: 4,
+                                    marginLeft: 4,
+                                    borderWidth: 2,
+                                    borderColor: '#4a47a3'
+                                }}
                                 size='small'
                                 ghost={true}
                             >
@@ -259,7 +362,12 @@ const Tags = ({item}) => {
                             size='small'
                             type='primary'
                             href={item.jobLink}
-                            style={{marginTop: 4, marginLeft: 4, borderWidth: 2, borderColor: '#00b7c2'}}
+                            style={{
+                                marginTop: 4,
+                                marginLeft: 4,
+                                borderWidth: 2,
+                                borderColor: '#00b7c2'
+                            }}
                             ghost={true}
                         >
                             <font color='#00b7c2'> <strong>{'Apply'}</strong></font>
@@ -267,6 +375,42 @@ const Tags = ({item}) => {
                     </div>
                 </TagContainer>
             </>
+        );
+    }
+};
+
+const ApplyEditButton = ({token, item}) => {
+    if (token === null) {
+        return (
+            <Button
+                size='small'
+                type='primary'
+                onClick={() => window.open(item.jobLink)}
+                style={{borderWidth: 2, borderColor: '#00b7c2'}}
+                ghost={true}
+            >
+                <font color='#00b7c2'> <strong>{'Apply'}</strong></font>
+            </Button>
+        );
+    } else {
+        return (
+            <Link
+                to={{
+                    pathname: '/editjob',
+                    state: {
+                        job: item
+                    }
+                }}
+            >
+                <Button
+                    size='small'
+                    type='primary'
+                    style={{borderWidth: 2, borderColor: '#00b7c2'}}
+                    ghost={true}
+                >
+                    <font color='#00b7c2'> <strong>{'Edit'}</strong></font>
+                </Button>
+            </Link>
         );
     }
 };
@@ -288,7 +432,16 @@ const Logo = () => {
                     style={{height: '95px', width: '95px'}}
                     src={require('./robot.jpg')}
                 />
-                <h2 style={{color: '#00b7c2', fontSize: 55, fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h2>
+                <h2
+                    style={{
+                        color: '#00b7c2',
+                        fontSize: 55,
+                        fontWeight: '700',
+                        marginTop: '2%'
+                    }}
+                >
+                    Full Stack Bot
+                </h2>
             </HeaderContainer>
         );
     } else {
@@ -299,7 +452,16 @@ const Logo = () => {
                     style={{height: '55px', width: '55px'}}
                     src={require('./robot.jpg')}
                 />
-                <h3 style={{color: '#00b7c2', fontSize: 25, fontWeight: '700', marginTop: '2%'}}>Full Stack Bot</h3>
+                <h3
+                    style={{
+                        color: '#00b7c2',
+                        fontSize: 25,
+                        fontWeight: '700',
+                        marginTop: '2%'
+                    }}
+                >
+                    Full Stack Bot
+                </h3>
             </HeaderContainer>
         );
     }
