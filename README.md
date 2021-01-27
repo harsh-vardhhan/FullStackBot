@@ -12,5 +12,5 @@ npm install
 ```
 npm start
 ```
-# Learn how to take this job board live here: 
+# Wanna learn how to take this job board live? check my ebook here: 
 [![Deploy Django App](https://firebasestorage.googleapis.com/v0/b/squarespace-chat.appspot.com/o/images%2Fcover.jpg?alt=media&token=f4cd35d5-ef54-4405-a607-498112512713)](https://codetolive.carrd.co/)
