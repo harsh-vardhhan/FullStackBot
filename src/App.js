@@ -162,6 +162,8 @@ function App() {
                 <Container style={{background: '#ffffff'}}>
                     <LogoBody/>
                 </Container>
+
+                <PostJob token={token}/>
                 <div
                     style={{
                         paddingBottom: '3%',
@@ -380,6 +382,31 @@ const Tags = ({item, token}) => {
                     </div>
                 </TagContainer>
             </>
+        );
+    }
+};
+
+const PostJob = ({token}) => {
+    if (token === null) {
+        return <div/>;
+    } else {
+        return (
+            <Link to={'/addjob'}>
+                <HeaderContainer>
+                    <Button
+                        style={{
+                            marginTop: 4,
+                            marginBottom: 10,
+                            borderWidth: 2,
+                            borderColor: '#f05454'
+                        }}
+                        size='small'
+                        ghost={true}
+                    >
+                        <font color='#f05454'> <strong>{'Post Job'}</strong></font>
+                    </Button>
+                </HeaderContainer>
+            </Link>
         );
     }
 };

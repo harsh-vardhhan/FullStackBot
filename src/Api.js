@@ -30,6 +30,17 @@ export const adminLogin = async (body) => {
 };
 
 export const editJob = async (body) => {
-    const response = await fetch.put('editjob/', body);
+    const headers = {
+        Authorization: 'Token ' + localStorage.getItem('token')
+    };
+    const response = await fetch.put('editjob/', body, {headers});
+    return response.data;
+};
+
+export const addJob = async (body) => {
+    const headers = {
+        Authorization: 'Token ' + localStorage.getItem('token')
+    };
+    const response = await fetch.post('addjob/', body, {headers});
     return response.data;
 };
