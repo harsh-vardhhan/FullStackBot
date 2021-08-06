@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
-import {List, Avatar, Button, Modal, Input, Row, Col} from 'antd';
+import {List, Avatar, Button, Modal, Input, Row, Col, Typography} from 'antd';
 import Collapsible from 'react-collapsible';
 import {getJob, getTag, filterTag, adminLogin} from './Api';
 import ReactGA from 'react-ga';
@@ -15,6 +15,8 @@ import {
 
 ReactGA.initialize('UA-31455093-8');
 ReactGA.pageview(window.location.pathname + window.location.search);
+
+const {Title} = Typography;
 
 const Container = styled.section`
   display: flex;
@@ -212,6 +214,50 @@ function App() {
                             </div>
                         );
                     })}
+                    <div style={{backgroundColor: '#f8edeb', padding: 10, marginBottom: 15}}>
+                        <Row>
+                            <Col
+                                sm={24}
+                                md={8}
+                            >
+                                <Title level={3}>
+                                    Wanna Learn to build projects like this and get a job ? 💰
+                                </Title>
+                            </Col>
+                            <Col
+                                sm={24}
+                                md={8}
+                                align='middle'
+                            >
+                                <Avatar
+                                    size={64}
+                                    src={'https://firebasestorage.googleapis.com/v0/b/squarespace-chat.appspot.com/o/images%2F508d?alt=media&token=70114f08-6dcc-4343-8e37-ff1fafec9338'}
+                                />
+                            </Col>
+                            <Col
+                                sm={24}
+                                md={8}
+                            >
+                                <Title level={4}>
+                                    1-1 Training for Django, React, and React Native
+                                </Title>
+                                <Link to={'/learn'}>
+                                    <Button
+                                        style={{
+                                            marginTop: 4,
+                                            marginLeft: 4,
+                                            borderWidth: 2,
+                                            borderColor: '#4a47a3'
+                                        }}
+                                        size='large'
+                                        ghost={true}
+                                    >
+                                        <font color='#4a47a3'><strong>{'Know More'}</strong></font>
+                                    </Button>
+                                </Link>
+                            </Col>
+                        </Row>
+                    </div>
                 </TableContainer>
             </div>
             <Container style={{height: 30}}>
